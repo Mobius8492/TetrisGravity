@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 14f7580d6a1c6df4a9d7980d097a81a2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Z: {instanceID: 0}
+  - RZ: {instanceID: 0}
+  - TSquare: {instanceID: 0}
+  - Stick: {instanceID: 0}
+  - Ball: {instanceID: 0}
+  - BigSquare: {instanceID: 0}
+  - HBlock: {instanceID: 0}
+  - Dango: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
