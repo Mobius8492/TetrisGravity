@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallShotTest : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class BallShotTest : MonoBehaviour
     public GameObject BigSquare;
     public GameObject HBlock;
     public GameObject Dango;
+    public Text shotTimingCount;
+
 
     private GameObject clone;
 
@@ -22,6 +25,7 @@ public class BallShotTest : MonoBehaviour
 
     private float canShot;
     private bool nextCreate;
+    private float shotTiming;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +36,7 @@ public class BallShotTest : MonoBehaviour
         gameObject.transform.position = new Vector2(0, 4.4f);
         rotateZ = 0;
         canShot = 0;
+        shotTiming = 5;
     }
 
     private void FixedUpdate()
@@ -67,6 +72,36 @@ public class BallShotTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        shotTiming -= Time.deltaTime;
+        shotTimingCount.text = shotTiming.ToString("00");
+
+        shotTimingCount.transform.position = transform.position - new Vector3(-2, 0);
+
+        if(shotTiming <= -0.4f)
+        {
+            int cloneCount = clone.transform.childCount;
+
+            if (cloneCount != 0)
+            {
+                for (int i = 0; i < cloneCount; i++)
+                {
+                    clone.transform.GetChild(i).GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                    clone.layer = 8;
+                    clone.transform.GetChild(i).gameObject.layer = 8;
+                }
+            }
+            else
+            {
+                clone.transform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                clone.layer = 8;
+            }
+
+            shotTiming = 5;
+            canShot = 0;
+            nextCreate = true;
+
+        }
+
         if (canShot >= 0.5f && Input.GetMouseButtonDown(0))
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -94,9 +129,13 @@ public class BallShotTest : MonoBehaviour
 
             canShot = 0;
             nextCreate = true;
+            shotTiming = 5.5f;
         }
 
         ShotPositionMove();
+
+        MoveLimit();
+
     }
 
     void ShotPositionMove()
@@ -106,8 +145,6 @@ public class BallShotTest : MonoBehaviour
         Vector2 moveDirection = new Vector2(x, 0).normalized;
 
         GetComponent<Rigidbody2D>().velocity = moveDirection * shooterSpeed;
-
-        MoveLimit();
     }
 
     void MoveLimit()
@@ -120,6 +157,7 @@ public class BallShotTest : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, min.x + 2, max.x - 2);
 
         gameObject.transform.position = pos;
+        shotTimingCount.transform.position = pos - new Vector2(2,0);
     }
 
     void BlockCreate(int randomShot, float randomRotation)
