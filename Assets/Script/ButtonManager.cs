@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class TitleManager : MonoBehaviour
+public class ButtonManager : MonoBehaviour
 {
 
-    public void OnClick()
+    public void InTitleStartClick()
     {
         FadeManager.Instance.LoadScene("Playing", 0.3f);
     }
 
-    public void OnClickDebug()
+    public void ClickDebug()
     {
         FadeManager.Instance.LoadScene("test", 0.3f);
     }

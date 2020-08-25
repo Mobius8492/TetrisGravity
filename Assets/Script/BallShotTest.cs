@@ -21,11 +21,13 @@ public class BallShotTest : MonoBehaviour
 
     public float shooterSpeed;
     public float shotSpeed;
-    float rotateZ;
+    public float rotateZSpeed;
+    private float rotateZ;
 
     private float canShot;
     private bool nextCreate;
-    private float shotTiming;
+    public float shotTiming;
+    private float shotTiming2;
 
     // Start is called before the first frame update
     void Start()
@@ -34,9 +36,9 @@ public class BallShotTest : MonoBehaviour
         shotSpeed = 10.0f;
         nextCreate = true;
         gameObject.transform.position = new Vector2(0, 4.4f);
-        rotateZ = 0;
+        //rotateZSpeed = 1;
         canShot = 0;
-        shotTiming = 5;
+        shotTiming2 = shotTiming;
     }
 
     private void FixedUpdate()
@@ -64,8 +66,8 @@ public class BallShotTest : MonoBehaviour
             nextCreate = false;
         }
 
+        rotateZ += rotateZSpeed;
         clone.transform.rotation = Quaternion.Euler(0, 0, rotateZ);
-        rotateZ += 2;
         clone.transform.position = transform.position;
     }
 
@@ -96,7 +98,7 @@ public class BallShotTest : MonoBehaviour
                 clone.layer = 8;
             }
 
-            shotTiming = 5;
+            shotTiming = shotTiming2;
             canShot = 0;
             nextCreate = true;
 
@@ -129,7 +131,7 @@ public class BallShotTest : MonoBehaviour
 
             canShot = 0;
             nextCreate = true;
-            shotTiming = 5.5f;
+            shotTiming = shotTiming2;
         }
 
         ShotPositionMove();
@@ -157,7 +159,7 @@ public class BallShotTest : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, min.x + 2, max.x - 2);
 
         gameObject.transform.position = pos;
-        shotTimingCount.transform.position = pos - new Vector2(2,0);
+        shotTimingCount.transform.position = pos - new Vector2(1.5f,0);
     }
 
     void BlockCreate(int randomShot, float randomRotation)

@@ -1399,6 +1399,8 @@ MonoBehaviour:
   shotTimingCount: {fileID: 139158041}
   shooterSpeed: 5
   shotSpeed: 5
+  rotateZSpeed: 10
+  shotTiming: 3
 --- !u!50 &427796047
 Rigidbody2D:
   serializedVersion: 4
