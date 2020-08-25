@@ -8,6 +8,7 @@ public class StartClick : MonoBehaviour
     public Button easy;
     public Button normal;
     public Button hard;
+    public Button veryhard;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,7 @@ public class StartClick : MonoBehaviour
         easy.gameObject.SetActive(false);
         normal.gameObject.SetActive(false);
         hard.gameObject.SetActive(false);
+        veryhard.gameObject.SetActive(false);
     }
 
     public void OnClick()
@@ -23,6 +25,6 @@ public class StartClick : MonoBehaviour
         easy.gameObject.SetActive(true);
         normal.gameObject.SetActive(true);
         hard.gameObject.SetActive(true);
+        veryhard.gameObject.SetActive(true);
     }
-
 }
