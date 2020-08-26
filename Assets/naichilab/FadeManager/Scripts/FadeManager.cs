@@ -133,7 +133,7 @@ public class FadeManager : MonoBehaviour
 		time = 0;
 		while (time <= interval) {
 			this.fadeAlpha = Mathf.Lerp (1f, 0f, time / interval);
-			time += Time.deltaTime;
+			time += Time.unscaledDeltaTime;
 			yield return 0;
 		}
 

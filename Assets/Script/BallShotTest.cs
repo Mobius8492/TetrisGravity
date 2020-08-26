@@ -14,10 +14,13 @@ public class BallShotTest : MonoBehaviour
     public GameObject BigSquare;
     public GameObject HBlock;
     public GameObject Dango;
+    public GameObject XBlock;
+    public GameObject LBlock;
     public Text shotTimingCount;
 
 
     private GameObject clone;
+    private ScoreManager score;
 
     public float shooterSpeed;
     public float shotSpeed;
@@ -25,6 +28,7 @@ public class BallShotTest : MonoBehaviour
     private float rotateZ;
 
     private float canShot;
+    private bool canAdd;
     private bool nextCreate;
     public float shotTiming;
     private float shotTiming2;
@@ -39,6 +43,8 @@ public class BallShotTest : MonoBehaviour
         //rotateZSpeed = 1;
         canShot = 0;
         shotTiming2 = shotTiming;
+        canAdd = true;
+        score = FindObjectOfType<ScoreManager>();
     }
 
     private void FixedUpdate()
@@ -70,6 +76,7 @@ public class BallShotTest : MonoBehaviour
         clone.transform.rotation = Quaternion.Euler(0, 0, rotateZ);
         clone.transform.position = transform.position;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -138,7 +145,36 @@ public class BallShotTest : MonoBehaviour
 
         MoveLimit();
 
+        TimingAdd();
+
     }
+
+    void TimingAdd()
+    {
+        int checkDeleteLines = score.getDeleteLines();
+        Debug.Log(checkDeleteLines);
+        Debug.Log(rotateZSpeed);
+        Debug.Log(shotTiming2);
+
+        if(checkDeleteLines != 0 && checkDeleteLines % 5 == 0)
+        {
+            if (canAdd)
+            {
+                rotateZSpeed += 1;
+                if (shotTiming2 > 1)
+                {
+                    shotTiming2 -= 0.5f;
+
+                }
+                canAdd = false;
+            }
+        }
+        else
+        {
+            canAdd = true;
+        }
+    }
+
 
     void ShotPositionMove()
     {
@@ -182,16 +218,30 @@ public class BallShotTest : MonoBehaviour
                 clone = Instantiate(Stick, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
                 break;
             case 4:
-                clone = Instantiate(Ball, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
+                clone = Instantiate(HBlock, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
                 break;
             case 5:
-                clone = Instantiate(BigSquare, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
+                if (score.getDeleteLines() >= 0)
+                {
+                    clone = Instantiate(LBlock, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
+                }
+                else
+                {
+                    clone = Instantiate(BigSquare, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
+                }
                 break;
             case 6:
                 clone = Instantiate(Dango, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
                 break;
             case 7:
-                clone = Instantiate(HBlock, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
+                if (score.getDeleteLines() >= 0)
+                {
+                    clone = Instantiate(XBlock, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
+                }
+                else
+                {
+                    clone = Instantiate(Ball, transform.position, Quaternion.Euler(0f, 0f, randomRotation));
+                }
                 break;
         }
 

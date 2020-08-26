@@ -47,10 +47,11 @@ public class DestroyBlock : MonoBehaviour
 
             for (int i = objtest.Count() - 1; 0 <= i; i--)
             {
-                FindObjectOfType<ScoreManager>().AddScore(FindObjectOfType<BallTest>().getScore());
+                FindObjectOfType<ScoreManager>().AddScore(objtest[i].GetComponent<BallTest>().getScore());
                 Destroy(objtest[i]);
             }
             canDestroy = false;
+            FindObjectOfType<ScoreManager>().AddDeleteLines();
             objtest.Clear();
         }
 

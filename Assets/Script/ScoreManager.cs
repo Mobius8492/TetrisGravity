@@ -13,6 +13,7 @@ public class ScoreManager : MonoBehaviour
     private int intScore;
     private int intHighScore;
     private int intOutBlocks;
+    private int deleteLines;
 
     private string HighScoreKey = "highScore";
 
@@ -22,6 +23,7 @@ public class ScoreManager : MonoBehaviour
         intScore = 0;
         intHighScore = PlayerPrefs.GetInt(HighScoreKey,0);
         intOutBlocks = 0;
+        deleteLines = 0;
     }
 
     // Update is called once per frame
@@ -52,9 +54,19 @@ public class ScoreManager : MonoBehaviour
         intOutBlocks += outBlock;
     }
 
+    public void AddDeleteLines()
+    {
+        deleteLines++;
+    }
+
     public int getOutBlocks()
     {
         return intOutBlocks;
+    }
+
+    public int getDeleteLines()
+    {
+        return deleteLines;
     }
 
     public void ScoreSave()
