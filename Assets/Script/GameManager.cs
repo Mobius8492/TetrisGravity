@@ -28,7 +28,10 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            FindObjectOfType<ScoreManager>().ScoreSave();
+            if (SceneManager.GetActiveScene().name == "Playing")
+            {
+                FindObjectOfType<ScoreManager>().ScoreSave();
+            }
             UnityEngine.Application.Quit();
         }
 
